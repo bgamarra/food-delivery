@@ -1,4 +1,35 @@
-<p>
-  delivery-form works!
-  --{{delivery.nombre}}--
-</p>
+<div class="container">  
+  <form [formGroup]="deliveryForm" (ngSubmit)="submitForm(deliveryForm.value)" id="contact" >
+    <h3>Datos administrativos</h3>
+    <div class="form-group" [ngClass]="{'has-error':!deliveryForm.controls['nombre'].valid && deliveryForm.controls['nombre'].touched}">
+      <input name="nombre" [formControl]="deliveryForm.controls['nombre']" placeholder="Nombre" type="text" tabindex="1" required autofocus>
+    </div>
+    <app-validation-messages *ngIf="!deliveryForm.controls['nombre'].valid && deliveryForm.controls['nombre'].touched" [form]="deliveryForm" [field]="'nombre'"></app-validation-messages>
+    <fieldset>
+      <input name="telefono" [formControl]="deliveryForm.controls['telefono']" placeholder="Tel&eacute;fono" type="tel" tabindex="2" required>
+    </fieldset>
+    <fieldset>
+      <textarea name="descripcion" [formControl]="deliveryForm.controls['descripcion']" placeholder="Descripci&oacute;n" tabindex="3" required (keyup)="updateMax(deliveryForm.controls['descripcion'].value)"></textarea>
+      <h4>
+      restan {{maxDescripcion}} caracteres
+      </h4>
+    </fieldset>
+    <fieldset>
+      <textarea name="especialidades" [formControl]="deliveryForm.controls['especialidades']" placeholder="Especialidades" tabindex="4" required (keyup)="updateMax(maxEspecialidades, deliveryForm.controls['especialidades'])"></textarea>
+      <h4>
+      restan {{maxEspecialidades}} caracteres
+      </h4>
+    </fieldset>
+    <fieldset>
+      <input name="direccion" [formControl]="deliveryForm.controls['direccion']" placeholder="Direcci&oacute;n" type="text" tabindex="5" required>
+    </fieldset>
+    <fieldset>
+      <label>Hora de atenci&oacute;n:</label><br>
+      <input name="hora_inicio" [formControl]="deliveryForm.controls['hora_inicio']" placeholder="Hora desde" tabindex="6" required>
+      <input name="hora_fin" [formControl]="deliveryForm.controls['hora_fin']" placeholder="Hora hasta" tabindex="7" required>
+    </fieldset>
+    <fieldset>
+      <button name="submit" type="submit" id="contact-submit" data-submit="...Sending" [disabled]="!deliveryForm.valid">Submit</button>
+    </fieldset>
+  </form>
+</div>
