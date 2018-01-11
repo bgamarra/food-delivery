@@ -1,35 +1,75 @@
 <div class="container">  
   <form [formGroup]="deliveryForm" (ngSubmit)="submitForm(deliveryForm.value)" id="contact" >
     <h3>Datos administrativos</h3>
-    <div class="form-group" [ngClass]="{'has-error':!deliveryForm.controls['nombre'].valid && deliveryForm.controls['nombre'].touched}">
-      <input name="nombre" [formControl]="deliveryForm.controls['nombre']" placeholder="Nombre" type="text" tabindex="1" required autofocus>
+    <div class="form-group">
+	    <div class="col-md-1">
+	      <label>Nombre</label>
+	    </div>
+	    <div class="col-md-11">
+	      <input name="nombre" [formControl]="deliveryForm.controls['nombre']" placeholder="Nombre" type="text" tabindex="1" required autofocus [ngClass]="{'has-error':!deliveryForm.controls['nombre'].valid && deliveryForm.controls['nombre'].touched}">
+    	  <app-validation-messages *ngIf="!deliveryForm.controls['nombre'].valid && deliveryForm.controls['nombre'].touched" [form]="deliveryForm" [field]="'nombre'" [max]="50"></app-validation-messages>
+	    </div>
     </div>
-    <app-validation-messages *ngIf="!deliveryForm.controls['nombre'].valid && deliveryForm.controls['nombre'].touched" [form]="deliveryForm" [field]="'nombre'"></app-validation-messages>
-    <fieldset>
-      <input name="telefono" [formControl]="deliveryForm.controls['telefono']" placeholder="Tel&eacute;fono" type="tel" tabindex="2" required>
-    </fieldset>
-    <fieldset>
-      <textarea name="descripcion" [formControl]="deliveryForm.controls['descripcion']" placeholder="Descripci&oacute;n" tabindex="3" required (keyup)="updateMax(deliveryForm.controls['descripcion'].value)"></textarea>
-      <h4>
-      restan {{maxDescripcion}} caracteres
-      </h4>
-    </fieldset>
-    <fieldset>
-      <textarea name="especialidades" [formControl]="deliveryForm.controls['especialidades']" placeholder="Especialidades" tabindex="4" required (keyup)="updateMax(maxEspecialidades, deliveryForm.controls['especialidades'])"></textarea>
-      <h4>
-      restan {{maxEspecialidades}} caracteres
-      </h4>
-    </fieldset>
-    <fieldset>
-      <input name="direccion" [formControl]="deliveryForm.controls['direccion']" placeholder="Direcci&oacute;n" type="text" tabindex="5" required>
-    </fieldset>
-    <fieldset>
-      <label>Hora de atenci&oacute;n:</label><br>
-      <input name="hora_inicio" [formControl]="deliveryForm.controls['hora_inicio']" placeholder="Hora desde" tabindex="6" required>
-      <input name="hora_fin" [formControl]="deliveryForm.controls['hora_fin']" placeholder="Hora hasta" tabindex="7" required>
-    </fieldset>
-    <fieldset>
+    <div class="form-group">
+    	<div class="col-md-1">
+	      <label>Tel&eacute;fono</label>
+	    </div>
+	    <div class="col-md-11">
+      		<input name="telefono" [formControl]="deliveryForm.controls['telefono']" placeholder="Tel&eacute;fono" type="tel" tabindex="2" required [ngClass]="{'has-error':!deliveryForm.controls['telefono'].valid && deliveryForm.controls['telefono'].touched}">
+    	  <app-validation-messages *ngIf="!deliveryForm.controls['telefono'].valid && deliveryForm.controls['telefono'].touched" [form]="deliveryForm" [field]="'telefono'" [max]="50"></app-validation-messages>
+	    </div>
+    </div>
+    <div class="form-group">
+    	<div class="col-md-1">
+	      <label>Descripci&oacute;n</label>
+	    </div>
+	    <div class="col-md-11">
+	      <textarea name="descripcion" [formControl]="deliveryForm.controls['descripcion']" placeholder="Descripci&oacute;n" tabindex="3" required (keyup)="updateMaxDes()" [ngClass]="{'has-error':!deliveryForm.controls['descripcion'].valid && deliveryForm.controls['descripcion'].touched}"></textarea>
+	      <h4>
+	      restan {{maxDescripcion}} caracteres
+	      </h4>
+    	  <app-validation-messages *ngIf="!deliveryForm.controls['descripcion'].valid && deliveryForm.controls['descripcion'].touched" [form]="deliveryForm" [field]="'descripcion'" [max]="1000"></app-validation-messages>
+      	</div>
+    </div>
+    <div class="form-group">
+    	<div class="col-md-1">
+	      <label>Especialidades</label>
+	    </div>
+	    <div class="col-md-11">
+	      <textarea name="especialidades" [formControl]="deliveryForm.controls['especialidades']" placeholder="Especialidades" tabindex="4" required (keyup)="updateMaxEsp()" [ngClass]="{'has-error':!deliveryForm.controls['especialidades'].valid && deliveryForm.controls['especialidades'].touched}"></textarea>
+	      <h4>
+	      restan {{maxEspecialidades}} caracteres
+	      </h4>
+    	  <app-validation-messages *ngIf="!deliveryForm.controls['especialidades'].valid && deliveryForm.controls['especialidades'].touched" [form]="deliveryForm" [field]="'especialidades'" [max]="500"></app-validation-messages>
+	    </div>
+    </div>
+    <div class="form-group">
+    	<div class="col-md-1">
+	      <label>Direcci&oacute;n</label>
+	    </div>
+	    <div class="col-md-11">
+      	  <input name="direccion" [formControl]="deliveryForm.controls['direccion']" placeholder="Direcci&oacute;n" type="text" tabindex="5" required [ngClass]="{'has-error':!deliveryForm.controls['direccion'].valid && deliveryForm.controls['direccion'].touched}">
+    	  <app-validation-messages *ngIf="!deliveryForm.controls['direccion'].valid && deliveryForm.controls['direccion'].touched" [form]="deliveryForm" [field]="'direccion'" [max]="200"></app-validation-messages>
+    	</div>
+    </div>
+    <div class="form-group">
+    	<div class="col-md-1">
+      	  <label>Horario de atenci&oacute;n:</label>
+    	</div>
+    	<div class="col-md-11">
+	      <input name="hora_inicio" [formControl]="deliveryForm.controls['hora_inicio']" placeholder="Hora desde" tabindex="6" type="hour" required>
+	      <input name="hora_fin" [formControl]="deliveryForm.controls['hora_fin']" placeholder="Hora hasta" tabindex="7" type="hour" required>
+    	</div>
+    </div>
+    <div class="form-group">
+    	<div class="col-md-6">
+    		<app-contact-form [titulo]="'Contacto administrativo'" [form]="deliveryForm.controls['contacto_administrativo']"></app-contact-form>
+    	</div>
+    	<div class="col-md-6">
+    	</div>
+    </div>
+    <div>
       <button name="submit" type="submit" id="contact-submit" data-submit="...Sending" [disabled]="!deliveryForm.valid">Submit</button>
-    </fieldset>
+    </div>
   </form>
 </div>

@@ -56,6 +56,7 @@ body {
   display: block;
   font-size: 13px;
   font-weight: 400;
+  font-style: italic;
 }
 
 fieldset {
@@ -69,27 +70,35 @@ fieldset label {
   font-size: 15px;
   font-weight: 400;
 }
-.has-error{
-  border:1px solid #ff0000;
+input.has-error,textarea.has-error{
+  border:1px solid #ff0000 !important;
 }
 
-#contact input[type="text"],
-#contact input[type="email"],
-#contact input[type="tel"],
-#contact input[type="url"],
-#contact textarea {
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+textarea {
   width: 100%;
   border: 1px solid #ccc;
   background: #FFF;
   margin: 0 0 5px;
   padding: 10px;
 }
+#contact input[type="hour"]{
+  width: 50%;
+  border: 1px solid #ccc;
+  background: #FFF;
+  margin: 0 0 5px;
+  padding: 10px;
+  float:left;
+}
 
-#contact input[type="text"]:hover,
-#contact input[type="email"]:hover,
-#contact input[type="tel"]:hover,
-#contact input[type="url"]:hover,
-#contact textarea:hover {
+input[type="text"]:hover,
+input[type="email"]:hover,
+input[type="tel"]:hover,
+input[type="url"]:hover,
+textarea:hover {
   -webkit-transition: border-color 0.3s ease-in-out;
   -moz-transition: border-color 0.3s ease-in-out;
   transition: border-color 0.3s ease-in-out;

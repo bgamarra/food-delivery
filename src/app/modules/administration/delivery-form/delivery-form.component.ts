@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Delivery } from 'app/classes/delivery';
+import { Contacto } from 'app/classes/contacto';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -9,6 +10,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class DeliveryFormComponent implements OnInit {
 
+  administrativo: Contacto = {
+    id: 1,
+    nombre: 'Juan Carlos',
+    apellido: 'Dinamita',
+    telefono: '4 123 123',
+    email: 'carlos@carlos.com'
+  };
   delivery: Delivery = {
     id: 1,
   	nombre: 'pepe',
@@ -18,30 +26,19 @@ export class DeliveryFormComponent implements OnInit {
   	hora_inicio: '12:00',
   	hora_fin: '15:00',
   	telefono: '4 234 123',
-  	contacto_administrativo: null,
+  	contacto_administrativo: this.administrativo,
   	contacto_comercial: null,
   };
-  deliveryData = {
-    id: this.delivery.id,
-    nombre: [this.delivery.nombre, Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(10)])],
-    descripcion: this.delivery.descripcion,
-    especialidades: this.delivery.especialidades,
-    direccion: 'asd',
-    hora_inicio: 'string',
-    hora_fin: 'string',
-    telefono: 'asd',
-    contacto_administrativo: null,
-    contacto_comercial: null,
-  };
+  
   deliveryForm: FormGroup;
   maxDescripcion = 1000 - +this.delivery.descripcion.length;
   maxEspecialidades = 500 - +this.delivery.especialidades.length;
-  constructor(formBuilder: FormBuilder) {
-    this.deliveryForm = formBuilder.group(this.deliveryData);
+  constructor(private formBuilder: FormBuilder) {
   }
 
 
   ngOnInit() {
+    this.deliveryForm = this.formBuilder.group(this.getFormData());
   }
 
   submitForm(form: any): void{
@@ -49,7 +46,37 @@ export class DeliveryFormComponent implements OnInit {
     console.log(form);
   }
 
-  updateMax(msje: string): void {
-    this.maxDescripcion = 1000 - +msje.length;
+  getFormData(): any {
+    return {
+      id: this.delivery.id,
+      nombre: [this.delivery.nombre, Validators.compose([Validators.required, Validators.maxLength(50)])],
+      descripcion: [this.delivery.descripcion, Validators.compose([Validators.required, Validators.maxLength(1000)])],
+      especialidades: [this.delivery.especialidades, Validators.compose([Validators.required, Validators.maxLength(500)])],
+      direccion: [this.delivery.direccion, Validators.compose([Validators.required, Validators.maxLength(200)])],
+      hora_inicio: [this.delivery.hora_inicio, Validators.required],
+      hora_fin: [this.delivery.hora_fin, Validators.required],
+      telefono: [this.delivery.telefono, Validators.compose([Validators.required, Validators.maxLength(50)])],
+      contacto_administrativo: this.getContactData(this.delivery.contacto_administrativo),
+      contacto_comercial: null,
+    };
+  }
+
+  getContactData(contacto: Contacto): any {
+    return this.formBuilder.group(
+      {
+        id: contacto.id,
+        nombre: [contacto.nombre, Validators.compose([Validators.required, Validators.maxLength(200)])],
+        apellido: [contacto.apellido, Validators.compose([Validators.required, Validators.maxLength(200)])],
+        telefono: [contacto.telefono, Validators.compose([Validators.required, Validators.maxLength(100)])],
+        email: [contacto.telefono, Validators.compose([Validators.required, Validators.maxLength(100)])]
+      }
+    );
+  }
+
+  updateMaxDes(): void {
+    this.maxDescripcion = 1000 - +this.deliveryForm.controls['descripcion'].value.length;
+  }
+  updateMaxEsp(): void {
+    this.maxEspecialidades = 500 - +this.deliveryForm.controls['especialidades'].value.length;
   }
 }

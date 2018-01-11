@@ -1,3 +1,13 @@
-<p>
-  contact-form works!
-</p>
+<br>
+<div class="contacto"> 
+	<h3>{{titulo}}</h3><br>
+	<div class="form-group">
+	    <div class="col-md-1">
+	      <label>Nombre</label>
+	    </div>
+	    <div class="col-md-11">
+	      <input name="nombre" [formControl]="form.controls['nombre']" placeholder="Nombre" type="text" tabindex="1" required autofocus [ngClass]="{'has-error':!form.controls['nombre'].valid && form.controls['nombre'].touched}">
+		  <app-validation-messages *ngIf="!form.controls['nombre'].valid && form.controls['nombre'].touched" [form]="form" [field]="'nombre'" [max]="200"></app-validation-messages>
+	    </div>
+	</div>
+</div>

@@ -9,6 +9,7 @@ import { FormGroup } from '@angular/forms';
 export class ValidationMessagesComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() field: string;
+  @Input() max: number;
   constructor() { }
 
   ngOnInit() {

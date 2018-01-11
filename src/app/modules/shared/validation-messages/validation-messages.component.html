@@ -1,2 +1,2 @@
-<div *ngIf="form.controls[field].hasError('required')" class="alert alert-danger">El campo {{field}} es requerido.</div>
-<div *ngIf="form.controls[field].hasError('minlength')" class="alert alert-danger">El campo {{field}} debe ser al menos de 5 caracteres.</div>
+<div *ngIf="form.controls[field].hasError('required')" class="alert alert-danger">El campo '{{field | titlecase}}' es requerido.</div>
+<div *ngIf="form.controls[field].hasError('maxlength')" class="alert alert-danger">El campo '{{field | titlecase}}' no puede contener mas de {{max}} caracteres.</div>
